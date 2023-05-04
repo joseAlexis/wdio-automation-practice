@@ -8,5 +8,5 @@ npm run wdio
 
 ## Run Test
 ```bash 
-npm run wdio --spec ./user.e2e.ts
+npx wdio wdio.conf.ts --spec ./test/specs/ContactUs.e2e.ts
 ```

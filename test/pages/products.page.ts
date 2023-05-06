@@ -9,8 +9,13 @@ class ProductPage extends BasePage {
         return $('.title')
     }
 
-    accessProductById(id: number) {
-        return $(`[href="/product_details/${id}"]`).click();
+    private getItem(id: number) {
+        return $(`[href="/product_details/${id}"]`);
+    }
+
+    async accessProductById(id: number) {
+        await (await this.getItem(id)).scrollIntoView();
+        await (await this.getItem(id)).click()
     }
 }
 

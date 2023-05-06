@@ -6,11 +6,11 @@ describe("Products Test Suite", () => {
     })
 
     it('Should Verify Product details page', async () => {
-        const productid = 1;
+        const productId = 1;
 
         await expect(ProductsPage.title).toBeDisplayed();
-        
-        await ProductsPage.accessProductById(productid);
-        await expect(await browser.getUrl()).toContain('/products');
+
+        await ProductsPage.accessProductById(productId);
+        await expect(await browser.getUrl()).toContain(`/product_details/${productId}`);
     });
 })

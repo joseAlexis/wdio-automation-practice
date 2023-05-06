@@ -4,8 +4,8 @@
 */
 export default class BasePage {
     private path = "";
-    
-    constructor(_path) {
+
+    constructor(_path: string) {
         this.path = _path;
     }
 
@@ -13,7 +13,7 @@ export default class BasePage {
     * Opens a sub page of the page
     * @param path path of the sub page (e.g. /path/to/page.html)
     */
-    public open () {
+    public open() {
         return browser.url(`${this.path}`)
     }
 }

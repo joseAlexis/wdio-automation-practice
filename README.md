@@ -5,3 +5,8 @@ Practice of Automation Project using WebDriverIO
 ```bash
 npm run wdio
 ```
+
+## Run Test
+```bash 
+npx wdio wdio.conf.ts --spec ./test/specs/ContactUs.e2e.ts
+```

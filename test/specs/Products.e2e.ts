@@ -1,16 +1,29 @@
-import ProductsPage from "../pages/products.page.ts";
+import ProductsPage from '../pages/products.page.ts';
+import ProductDetailsPage from '../pages/productDetails.page.ts';
 
-describe("Products Test Suite", () => {
-    before(async function () {
-        await ProductsPage.open();
-    })
+import ProductAPI from '../api/product.api.ts';
+import { Product } from '../types/product.ts';
 
-    it('Should Verify Product details page', async () => {
-        const productId = 1;
+describe('Products Test Suite', () => {
+  before(async function () {
+    await ProductsPage.open();
+    this.products = await ProductAPI.getList();
+  });
 
-        await expect(ProductsPage.title).toBeDisplayed();
+  /**
+   * TODO
+   * [ ] new ProductDetailsPage() when user click on producr card UI
+   * [ ] Fix product.category on type and add assertion
+   * [ ] Fix Brand locator and add assertion
+   */
+  it('Should Verify Product details page', async function () {
+    const product: Product = this.products[0];
 
-        await ProductsPage.accessProductById(productId);
-        await expect(await browser.getUrl()).toContain(`/product_details/${productId}`);
-    });
-})
+    await expect(ProductsPage.title).toBeDisplayed();
+
+    const productDetailsPage = new ProductDetailsPage(product.id);
+    await productDetailsPage.open();
+    await expect(productDetailsPage.name).toHaveText(product.name);
+    await expect(productDetailsPage.price).toHaveText(product.price);
+  });
+});

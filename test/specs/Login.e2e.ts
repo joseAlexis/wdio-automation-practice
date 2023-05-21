@@ -1,16 +1,23 @@
-import UserPage from '../pages/login.page.ts';
-import User from '../types/User';
+import LoginPage from '../pages/login.page.ts';
+import HomePage from '../pages/home.page.ts';
 import { generateUser } from '../dataProviders/UserDataProvider.ts';
+import UserApi from '../api/user.api.ts';
 
-describe("User test suite", () => {
-    before(async function () {
-        await UserPage.open();
-    })
+describe('User test suite', () => {
+  before(async function () {
+    this.user = generateUser();
+    await UserApi.create(this.user);
+  });
 
-    it('Should register User', async () => {
-        await expect(UserPage.signInTitle).toBeDisplayed();
+  after(async function () {
+    await UserApi.remove({ email: this.user.email, password: this.user.password });
+  });
 
-        const user = generateUser();
-        // await UserPage.signUp(user);
-    })
+  it('Should login with valid credentials', async function () {
+    await LoginPage.open();
+    await expect(LoginPage.signInTitle).toBeDisplayed();
+
+    await LoginPage.signIn({ email: this.user.email, password: this.user.password });
+    await expect(HomePage.menuItem(10)).toHaveTextContaining(`Logged in as ${this.user.name}`);
+  });
 });

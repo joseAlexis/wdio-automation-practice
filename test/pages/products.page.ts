@@ -1,22 +1,22 @@
-import BasePage from "./base.page.ts";
+import BasePage from './base.page.ts';
 
 class ProductPage extends BasePage {
-    constructor() {
-        super('/products');
-    }
+  constructor() {
+    super('/products');
+  }
 
-    get title() {
-        return $('.title')
-    }
+  get title() {
+    return $('.title');
+  }
 
-    private getItem(id: number) {
-        return $(`[href="/product_details/${id}"]`);
-    }
+  private getItem(id: number) {
+    return $(`[href="/product_details/${id}"]`);
+  }
 
-    async accessProductById(id: number) {
-        await (await this.getItem(id)).scrollIntoView();
-        await (await this.getItem(id)).click()
-    }
+  async accessProductById(id: number) {
+    await (await this.getItem(id)).scrollIntoView();
+    await (await this.getItem(id)).click();
+  }
 }
 
 export default new ProductPage();

@@ -1,18 +1,22 @@
-import axios, { formToJSON } from 'axios';
 import { UserData, UserLogin } from '../types/User';
-import { createFormDataFromJson } from "../utils/utilities.ts"
+import { createFormDataFromJson } from '../utils/utilities.ts';
+import { HttpClient } from './init.ts';
 
-export const createUserAPI = async (data: UserData) => {
+class UserAPI extends HttpClient {
+  constructor() {
+    super();
+  }
+
+  async create(data: UserData) {
     const form = createFormDataFromJson(data);
 
-    return await axios.post('https://automationexercise.com/api/createAccount', form);
-}
+    return await this.instance.post('/api/createAccount', form);
+  }
 
-export const removeUserAPI = async (login: UserLogin) => {
+  async remove(login: UserLogin) {
     const form = createFormDataFromJson(login);
-    return await axios.delete('https://automationexercise.com/api/deleteAccount', { data: form });
+    return await this.instance.delete('/api/deleteAccount', { data: form });
+  }
 }
 
-const getProductList = async () => {
-    return await axios.get('https://automationexercise.com/api/productsList');
-}
+export default new UserAPI();
